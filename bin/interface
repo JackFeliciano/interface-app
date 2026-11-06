@@ -1,0 +1,88 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Interface\Engine;
+
+require __DIR__ . '/../autoload.php';
+
+$argv = $_SERVER['argv'];
+$command = $argv[1] ?? 'help';
+$engine = Engine::shared();
+
+$fail = static function (string $message): never {
+    fwrite(STDERR, $message . PHP_EOL);
+    exit(1);
+};
+
+switch ($command) {
+    case 'parse':
+        $text = $argv[2] ?? $fail('parse needs a sentence');
+        $sentence = $engine->parse($text);
+        $slice = static function (array $part) use ($sentence): string {
+            $out = [];
+            for ($i = $part['start']; $i <= $part['end']; $i++) {
+                $out[] = $sentence->tokens[$i]->text;
+            }
+
+            return implode(' ', $out);
+        };
+        echo $sentence->scheme . PHP_EOL;
+        foreach ($sentence->cores as $core) {
+            echo '  core ' . $core['role'] . ': ' . $slice($core) . PHP_EOL;
+        }
+        foreach ($sentence->adjuncts as $adjunct) {
+            echo '  adjunct ' . $adjunct['role'] . ': ' . $slice($adjunct) . PHP_EOL;
+        }
+        break;
+
+    case 'forms':
+        $concept = $argv[2] ?? $fail('forms needs a concept');
+        $language = $argv[3] ?? 'en';
+        $forms = $engine->forms($concept, $language);
+        if ($forms === []) {
+            $fail('no record for ' . $concept . ' in ' . $language);
+        }
+        echo implode(PHP_EOL, $forms) . PHP_EOL;
+        break;
+
+    case 'lookup':
+        $form = $argv[2] ?? $fail('lookup needs a word');
+        $hits = $engine->lexis->find($form);
+        echo $hits === [] ? 'nothing' . PHP_EOL : implode(PHP_EOL, $hits) . PHP_EOL;
+        break;
+
+    case 'constructions':
+        foreach ($engine->constructions->all() as $construction) {
+            echo $construction->name . ' [' . implode(', ', $construction->languages) . ']' . PHP_EOL;
+            echo '  ' . $construction->pattern . PHP_EOL;
+        }
+        break;
+
+    case 'path':
+        foreach ($engine->path->lessons() as $lesson) {
+            printf("%2d  %s  %s\n", $lesson->number, strtoupper($lesson->language), $lesson->title);
+        }
+        break;
+
+    case 'prompt':
+        $number = (int) ($argv[2] ?? $fail('prompt needs a lesson number'));
+        $prompt = $engine->promptForLesson($number);
+        if ($prompt === null) {
+            $fail('no lesson ' . $number);
+        }
+        echo $prompt->text . PHP_EOL;
+        break;
+
+    case 'usage':
+    case 'help':
+    default:
+        echo 'interface parse "The teacher gives the student a book"' . PHP_EOL;
+        echo 'interface forms write en' . PHP_EOL;
+        echo 'interface lookup men' . PHP_EOL;
+        echo 'interface constructions' . PHP_EOL;
+        echo 'interface path' . PHP_EOL;
+        echo 'interface prompt 8' . PHP_EOL;
+        break;
+}

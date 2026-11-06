@@ -1,0 +1,94 @@
+/* Interface: one stylesheet, no framework. */
+:root {
+  --ink: #1c1c1c;
+  --muted: #5a5a5a;
+  --line: #dcd8d2;
+  --paper: #faf8f5;
+  --mark: #880000;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 17px/1.6 Georgia, "Times New Roman", serif;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 1.4rem 1.6rem;
+  border-bottom: 1px solid var(--line);
+}
+
+header .mark {
+  font-size: 1.3rem;
+  letter-spacing: 0.02em;
+  color: var(--mark);
+  text-decoration: none;
+}
+
+header nav { display: flex; flex-wrap: wrap; gap: 1.2rem; }
+header nav a { color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; }
+header nav a:hover { border-bottom-color: var(--mark); }
+
+main { max-width: 62rem; margin: 0 auto; padding: 2rem 1.6rem 3rem; }
+
+h1 { font-size: 2rem; font-weight: normal; margin: 0 0 0.6rem; }
+h2 { font-size: 1.2rem; font-weight: bold; margin: 2.2rem 0 0.7rem; }
+h3 { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 1.6rem 0 0.4rem; }
+
+.lede { font-size: 1.05rem; color: var(--muted); max-width: 46rem; }
+.small, footer { font-size: 0.85rem; color: var(--muted); }
+
+table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.95rem; }
+th, td { text-align: left; padding: 0.5rem 0.6rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: normal; }
+
+code { font-family: Consolas, "Courier New", monospace; font-size: 0.9em; background: #f0ece6; padding: 0.1rem 0.3rem; }
+
+form { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; margin: 1.2rem 0 1.6rem; }
+label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+input, select, button, textarea {
+  font: inherit;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  border-radius: 2px;
+}
+input { min-width: 22rem; }
+button { background: var(--mark); color: #fff; border-color: var(--mark); cursor: pointer; }
+
+.error { color: var(--mark); }
+
+.scheme code { font-size: 1rem; }
+
+dl.record { display: grid; grid-template-columns: max-content 1fr; gap: 0.35rem 1.4rem; margin: 1rem 0; }
+dl.record dt { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); padding-top: 0.2rem; }
+dl.record dd { margin: 0; }
+
+.forms { font-family: Consolas, "Courier New", monospace; }
+
+.prompt { width: 100%; font-family: Consolas, "Courier New", monospace; font-size: 0.9rem; line-height: 1.5; }
+
+ul.parts li, ol.path li { margin-bottom: 0.5rem; }
+
+ol.path { list-style: none; padding: 0; }
+ol.path li { display: grid; grid-template-columns: 2.5rem 3rem 1fr; gap: 0.4rem 0.8rem; padding: 0.7rem 0; border-bottom: 1px solid var(--line); }
+ol.path .number { color: var(--mark); }
+ol.path .lang { font-size: 0.8rem; letter-spacing: 0.06em; color: var(--muted); padding-top: 0.25rem; }
+ol.path .goal { grid-column: 3; font-size: 0.9rem; color: var(--muted); }
+
+footer { padding: 1.4rem 1.6rem 2.4rem; max-width: 62rem; margin: 0 auto; border-top: 1px solid var(--line); }
+
+@media (max-width: 40rem) {
+  input { min-width: 0; width: 100%; }
+  ol.path li { grid-template-columns: 2rem 1fr; }
+  ol.path .goal { grid-column: 2; }
+}

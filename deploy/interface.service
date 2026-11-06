@@ -1,0 +1,22 @@
+[Unit]
+Description=Interface language course
+After=network.target
+
+[Service]
+Type=simple
+User=opc
+Group=opc
+WorkingDirectory=/srv/interface
+Environment=INTERFACE_BASE=/interface/
+ExecStart=/usr/bin/php -S 127.0.0.1:8096 -t showroom showroom/index.php
+Restart=on-failure
+RestartSec=2
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/tmp
+MemoryDenyWriteExecute=true
+
+[Install]
+WantedBy=multi-user.target
