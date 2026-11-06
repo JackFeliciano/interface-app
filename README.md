@@ -1,8 +1,8 @@
 # Interface
 
-An intensive Indo-European language course. The application sorts sentences, holds a lemma-first lexical database, writes conversation prompts for a learner to hand to any assistant, and carries a path from English through Portuguese to Russian.
+Interface is an intensive language course. One engine serves every Indo-European language. The course draws on Chomsky's generative grammar, which treats the constructions beneath languages as members of one universal set. Learners study sentence structures across languages. Frequency lists guide the selection and order of vocabulary for each level. Lessons bring these elements together through sentence building, with AI-assisted prompts for conversation practice.
 
-The engine is what makes the course work, and everything on the screen comes from it.
+LEX stores lemmas and derives their word forms, while frequency lists guide vocabulary selection. GRAM classifies sentences, tracks morphology across sixteen word classes and checks learner-built sentences. CHAT turns each lesson's vocabulary, constructions and special cases into a prompt for any AI assistant. APP delivers the course through a direct lesson path, and MOBILE brings the same course to a phone.
 
 ## The four parts
 

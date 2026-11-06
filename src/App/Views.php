@@ -60,6 +60,7 @@ final class Views
     {
         $out = '<h1>The Interface language course</h1>' . "\n";
         $out .= '<p class="lede">An intensive Indo-European language course. One engine sorts the sentences, one database holds the words and derives their forms, one engine turns a lesson into a conversation, and the path carries a learner from English to Portuguese to Russian.</p>' . "\n";
+        $out .= '<p>Interface is an intensive language course. One engine serves every Indo-European language. The course draws on Chomsky\'s generative grammar, which treats the constructions beneath languages as members of one universal set. Learners study sentence structures across languages. Frequency lists guide the selection and order of vocabulary for each level. Lessons bring these elements together through sentence building, with AI-assisted prompts for conversation practice.</p>' . "\n";
 
         $out .= '<h2>What the engine does with a sentence</h2>' . "\n";
         $out .= '<table><thead><tr><th>Sentence</th><th>Scheme</th><th>Cores</th></tr></thead><tbody>';
