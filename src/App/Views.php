@@ -32,7 +32,7 @@ final class Views
             . '<body>' . "\n"
             . self::nav($base)
             . '<main>' . "\n" . $body . '</main>' . "\n"
-            . '<footer><p>Interface, the syntax engine, the lexical database, the conversation engine and the path.</p></footer>' . "\n"
+            . '<footer><p>Interface includes sentence parsing, lexical records, AI practice prompts and a twelve lesson course path.</p></footer>' . "\n"
             . '</body>' . "\n"
             . '</html>' . "\n";
     }
@@ -58,24 +58,19 @@ final class Views
     /** @param list<array{0: string, 1: string, 2: string}> $rows */
     public static function home(string $base, array $rows, Engine $engine): string
     {
-        $out = '<h1>The Interface language course</h1>' . "\n";
-        $out .= '<p class="lede">An intensive Indo-European language course. One engine sorts the sentences, one database holds the words and derives their forms, one engine turns a lesson into a conversation, and the path carries a learner from English to Portuguese to Russian.</p>' . "\n";
-        $out .= '<p>Interface is an intensive language course. One engine serves every Indo-European language. The course draws on Chomsky\'s generative grammar, which treats the constructions beneath languages as members of one universal set. Learners study sentence structures across languages. Frequency lists guide the selection and order of vocabulary for each level. Lessons bring these elements together through sentence building, with AI-assisted prompts for conversation practice.</p>' . "\n";
+        $out = '<h1>Interface, A Structured Course for Languages</h1>' . "\n";
+        $out .= '<p class="lede">Interface is an intensive language course for learners who want to understand how languages build sentences. One engine serves every Indo-European language. Syntax explains sentence structure, Lexis organizes vocabulary, Chat connects lessons to AI conversation practice, and Path gives learners a sequence of twelve lessons across three languages.</p>' . "\n";
+        $out .= '<p>Interface combines Chomsky\'s generative grammar with lexical analysis based on frequency lists. Generative grammar provides a universal set of sentence constructions that learners study across languages. Frequency lists determine which words learners need at each level and in what order. The course joins both in sentence building. Learners study grammar and vocabulary together, construct sentences, and use AI prompts for conversation practice.</p>' . "\n";
 
-        $out .= '<h2>What the engine does with a sentence</h2>' . "\n";
+        $out .= '<h2>Five Sentence Structures</h2>' . "\n";
         $out .= '<table><thead><tr><th>Sentence</th><th>Scheme</th><th>Cores</th></tr></thead><tbody>';
         foreach ($rows as $row) {
             $out .= '<tr><td>' . self::esc($row[0]) . '</td><td><code>' . self::esc($row[1]) . '</code></td><td>' . self::esc($row[2]) . '</td></tr>';
         }
         $out .= '</tbody></table>' . "\n";
 
-        $out .= '<h2>The four parts</h2>' . "\n";
-        $out .= '<ul class="parts">';
-        $out .= '<li><strong>Syntax.</strong> Five schemes, sixteen word classes, cores separated from the adjuncts that orbit them.</li>';
-        $out .= '<li><strong>Lexis.</strong> ' . $engine->lexis->size() . ' concepts, each filed under one of the eleven families, in three languages.</li>';
-        $out .= '<li><strong>Chat.</strong> ' . $engine->constructions->size() . ' constructions, including the one where the thing liked is the subject and the person carries the dative.</li>';
-        $out .= '<li><strong>Path.</strong> ' . $engine->path->size() . ' lessons across ' . count($engine->path->languages()) . ' languages.</li>';
-        $out .= '</ul>' . "\n";
+        $out .= '<h2>Four Parts of Interface</h2>' . "\n";
+        $out .= '<ul class="parts"><li><strong>Syntax.</strong> Five sentence schemes, sixteen word classes, and a distinction between sentence cores and adjuncts give learners a framework for building sentences.</li><li><strong>Lexis.</strong> Lexis stores lemmas across fourteen concepts and eleven families in English, Portuguese and Russian, then derives the word forms from each lemma.</li><li><strong>Chat.</strong> Seven constructions shape prompts for AI conversation practice, including one that makes the thing liked the subject and puts the person in the dative.</li><li><strong>Path.</strong> Twelve lessons across three languages give learners a defined course sequence.</li></ul>' . "\n";
 
         return $out;
     }
@@ -83,7 +78,7 @@ final class Views
     public static function parse(string $base, ?Sentence $sentence, string $text, string $error): string
     {
         $b = self::esc($base);
-        $out = '<h1>Parse a sentence</h1>' . "\n";
+        $out = '<h1>Parse a Sentence</h1>' . "\n";
         $out .= '<form method="post" action="' . $b . 'parse"><label for="sentence">A sentence in English</label>'
             . '<input id="sentence" name="sentence" value="' . self::esc($text) . '" placeholder="The teacher gives the student a book">'
             . '<button type="submit">Sort it</button></form>' . "\n";
@@ -120,7 +115,7 @@ final class Views
     public static function lexis(string $base, ?Lemma $lemma, string $concept, string $language, array $forms, array $concepts): string
     {
         $b = self::esc($base);
-        $out = '<h1>Lexical records</h1>' . "\n";
+        $out = '<h1>Lexical Records</h1>' . "\n";
         $out .= '<p class="lede">Each record stores a concept and its lemmas, and the engine derives the forms. A verb yields every form it takes. A regular noun nobody entered still declines.</p>' . "\n";
         $out .= '<form method="post" action="' . $b . 'lexis"><label for="concept">Concept</label><input id="concept" name="concept" value="' . self::esc($concept) . '">'
             . '<label for="language">Language</label><select id="language" name="language">';
@@ -166,7 +161,7 @@ final class Views
     public static function chat(string $base, ?Prompt $prompt, int $number, Engine $engine): string
     {
         $b = self::esc($base);
-        $out = '<h1>Practice prompt</h1>' . "\n";
+        $out = '<h1>Practice Prompt</h1>' . "\n";
         $out .= '<p class="lede">Pick a lesson. The engine writes a prompt that carries the vocabulary, the constructions and the special cases, and you hand it to any AI assistant.</p>' . "\n";
         $out .= '<form method="post" action="' . $b . 'chat"><label for="lesson">Lesson</label><select id="lesson" name="lesson">';
         foreach ($engine->path->lessons() as $lesson) {
@@ -187,7 +182,7 @@ final class Views
 
     public static function path(string $base, Engine $engine): string
     {
-        $out = '<h1>The path</h1>' . "\n";
+        $out = '<h1>Course Path</h1>' . "\n";
         $out .= '<p class="lede">English carries the structures. Portuguese and Russian arrive as the same structures with different words.</p>' . "\n";
         $out .= '<ol class="path">';
         foreach ($engine->path->lessons() as $lesson) {
